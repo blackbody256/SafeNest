@@ -1,52 +1,108 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.app', ['activePage' => 'register', 'title' => 'Light Bootstrap Dashboard Laravel by Creative Tim & UPDIVISION'])
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@section('content')
+    <div class="full-page register-page section-image" data-color="orange" data-image="{{ asset('light-bootstrap/img/bg5.jpg') }}">
+        <div class="content">
+            <div class="container">
+                <div class="card card-register card-plain text-center">
+                    <div class="card-body ">
+                        <div class="row">
+                            <div class="col-md-5 ml-auto">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="icon">
+                                            <i class="nc-icon nc-circle-09"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>{{ __('Free Account') }}</h4>
+                                        <p>{{ __('Here you can write a feature description for your dashboard, let the users know what is the value that you give them.') }}</p>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="icon">
+                                            <i class="nc-icon nc-preferences-circle-rotate"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>{{ __('Awesome Performances') }}</h4>
+                                        <p>{{ __('Here you can write a feature description for your dashboard, let the users know what is the value that you give them.') }}</p>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <div class="icon">
+                                            <i class="nc-icon nc-planet"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4>{{ __('Global Support') }}</h4>
+                                        <p>{{ __('Here you can write a feature description for your dashboard, let the users know what is the value that you give them.') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mr-auto">
+                                <form method="POST" action="{{ route('register') }}">
+                                    @csrf
+                                    <div class="card card-plain">
+                                        <div class="content">
+                                            <div class="form-group">
+                                                <input type="text" name="name" id="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') }}" required autofocus>
+                                            </div>
+
+                                            <div class="form-group">   {{-- is-invalid make border red --}}
+                                                <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter email" class="form-control" required>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input type="password" name="password" class="form-control" required >
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="password" name="password_confirmation" placeholder="Password Confirmation" class="form-control" required autofocus>
+                                            </div>
+                                            <div class="form-group d-flex justify-content-center">
+                                                <div class="form-check rounded col-md-10 text-left">
+                                                    <label class="form-check-label text-white d-flex align-items-center">
+                                                        <input class="form-check-input" name="agree" type="checkbox" required >
+                                                        <span class="form-check-sign"></span>
+                                                        <b>{{ __('Agree with terms and conditions') }}</b>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="footer text-center">
+                                                <button type="submit" class="btn btn-fill btn-neutral btn-wd">{{ __('Create Free Account') }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col">
+                                @foreach ($errors->all() as $error)
+                                    <div class="alert alert-warning alert-dismissible fade show" >
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close"> &times;</a>
+                                        {{ $error }}
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+@endsection
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+@push('js')
+    <script>
+        $(document).ready(function() {
+            demo.checkFullPageBackgroundImage();
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            setTimeout(function() {
+                // after 1000 ms we add the class animated to the login/register card
+                $('.card').removeClass('card-hidden');
+            }, 700)
+        });
+    </script>
+@endpush
