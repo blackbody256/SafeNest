@@ -12,9 +12,7 @@ Tip 2: you can also add an image using data-image tag
         </div>
         <ul class="nav">
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
-
-                <a class="nav-link" href="{{url()->current()}}">
-
+                <a class="nav-link" href="{{route('customerdashboard')}}">
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>{{ __("Dashboard") }}</p>
                 </a>
@@ -26,12 +24,10 @@ Tip 2: you can also add an image using data-image tag
                                 <p>{{ __("User Profile") }}</p>
                             </a>
 
-                        </li>
-                        <li class="nav-item @if(($activePage ?? '')=='policies') active @endif">
-                            <a class="nav-link" href="{{route('policies.index')}}">
+                        
+                            <a class="nav-link" href="{{route('mypolicies') }}">
                                 <i class="nc-icon nc-circle-09"></i>
-                                <p>{{ __("Policy") }}</p>
-
+                                <p>{{ __("My Policies") }}</p>
                             </a>
             </li>
 

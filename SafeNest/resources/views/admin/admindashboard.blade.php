@@ -75,6 +75,8 @@
                             <h4 class="card-title">{{ __('Tasks') }}</h4>
                             <p class="card-category">{{ __('Backend development') }}</p>
                         </div>
+                        <a href="{{ route('customerdashboard') }}">My Policies</a>
+
                         <div class="card-body ">
                             <div class="table-full-width">
                                 <table class="table">

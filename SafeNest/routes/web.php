@@ -20,6 +20,12 @@ use App\Http\Controllers\ApplicationController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/customerdashboard', function () {
+    return view('customer.dashboard');
+})->name('customerdashboard');
+Route::get('/mypolicies', function () {
+    return view('customer.mypolicy');
+})->name('mypolicies');
 
 
 Route::get('/redirect-by-role', function () {
