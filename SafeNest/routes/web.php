@@ -43,6 +43,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::patch('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::patch('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+Route::get('/admin/dashboard', [App\Http\Controllers\AdminDashboardController::class, 'index'])
+    ->middleware('auth')
+    ->name('admin.dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('{page}', ['as' => 'page.index', 'uses' => 'App\Http\Controllers\PageController@index']);
