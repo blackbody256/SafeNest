@@ -22,7 +22,15 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('dashboard');
-    }
+{
+    $role = auth()->user()->role;
+
+    return match($role) {
+        'admin' => view('admin'),
+        'customer' => view('customer'),
+        'underwriter' => view('underwriter'),
+        default => abort(403),
+    };
+}
+
 }
