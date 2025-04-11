@@ -12,7 +12,7 @@ Tip 2: you can also add an image using data-image tag
         </div>
         <ul class="nav">
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
-                <a class="nav-link" href="{{route('dashboard')}}">
+                <a class="nav-link" href="{{route('admindashboard')}}">
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>{{ __("Dashboard") }}</p>
                 </a>
@@ -36,12 +36,7 @@ Tip 2: you can also add an image using data-image tag
                                 <p>{{ __("User Profile") }}</p>
                             </a>
                         </li>
-                        <li class="nav-item @if($activePage == 'user-management') active @endif">
-                            <a class="nav-link" href="{{route('user.index')}}">
-                                <i class="nc-icon nc-circle-09"></i>
-                                <p>{{ __("User Management") }}</p>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </li>

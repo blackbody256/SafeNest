@@ -26,9 +26,9 @@ class HomeController extends Controller
     $role = auth()->user()->role;
 
     return match($role) {
-        'admin' => view('admin'),
-        'customer' => view('customer'),
-        'underwriter' => view('underwriter'),
+        'admin' => view('admin.admindashboard'),
+        'customer' => view('customer.dashboard'),
+        'underwriter' => view('underwriter.dashboard'),
         default => abort(403),
     };
 }
