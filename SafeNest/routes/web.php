@@ -18,10 +18,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/redirect-by-role', function () {
+    $role = auth()->user()->role;
+
+    return match($role) {
+        'admin' => redirect('/admin'),
+        'customer' => redirect('/customer'),
+        'underwriter' => redirect('/underwriter'),
+        default => abort(403),
+    };
+})->middleware('auth');
+
+Route::get('/admin', fn() => view('admin'))->middleware('role:admin')->name('admin');
+Route::get('/customer', fn() => view('customer'))->middleware('role:customer')->name('customer');
+Route::get('/underwriter', fn() => view('underwriter'))->middleware('role:underwriter')->name('underwriter');
+
+/*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
+*/
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -33,9 +48,9 @@ require __DIR__.'/auth.php';
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
+/*Auth::routes();*/
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('dashboard');
+/*Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('dashboard');*/
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
