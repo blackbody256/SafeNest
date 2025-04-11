@@ -1,5 +1,6 @@
 @extends('layouts.app', ['activePage' => 'dashboard', 'title' => 'Light Bootstrap Dashboard Laravel by Creative Tim & UPDIVISION', 'navName' => 'Dashboard', 'activeButton' => 'laravel'])
 
+
 @section('content')
     <div class="content">
         <div class="container-fluid">
@@ -7,7 +8,7 @@
                 <div class="col-md-4">
                     <div class="card ">
                         <div class="card-header ">
-                            <h4 class="card-title">{{ __('Email Statistics') }}</h4>
+                            <h4 class="card-title">{{ __('Admin Statistics') }}</h4>
                             <p class="card-category">{{ __('Last Campaign Performance') }}</p>
                         </div>
                         <div class="card-body ">
@@ -222,3 +223,5 @@
         });
     </script>
 @endpush
+
+@php($title = 'Admin Dashboard')
