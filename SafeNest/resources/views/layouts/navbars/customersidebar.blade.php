@@ -7,7 +7,7 @@ Tip 2: you can also add an image using data-image tag
     <div class="sidebar-wrapper">
         <div class="logo">
             <a href="http://www.creative-tim.com" class="simple-text">
-                {{ __("GROUP J") }}
+                {{ __("Safe Nest") }}
             </a>
         </div>
         <ul class="nav">
@@ -18,13 +18,16 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
            
-            <li class="nav-item">                                
-                            <a class="nav-link" href="{{route('profile.edit')}}">
-                                <i class="nc-icon nc-single-02"></i>
-                                <p>{{ __("User Profile") }}</p>
-                            </a>
+           
 
-                        
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('profile.edit')}}">
+                    <i class="nc-icon nc-single-02"></i>
+                    <p>{{ __("User Profile") }}</p>
+                </a>
+            </li>
+
+            <li class="nav-item @if($activePage == 'My Policies') active @endif">
                             <a class="nav-link" href="{{route('mypolicies') }}">
                                 <i class="nc-icon nc-circle-09"></i>
                                 <p>{{ __("My Policies") }}</p>
@@ -32,16 +35,18 @@ Tip 2: you can also add an image using data-image tag
             </li>
 
 
+
+
             <li class="nav-item @if($activePage == 'table') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'table')}}">
+                <a class="nav-link" href="{{route('policy.catalogue')}}">
                     <i class="nc-icon nc-notes"></i>
-                    <p>{{ __("Table List") }}</p>
+                    <p>{{ __("Policy Catalogue") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'typography') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'typography')}}">
+                <a class="nav-link" href="{{route('my.applications')}}">
                     <i class="nc-icon nc-paper-2"></i>
-                    <p>{{ __("Typography") }}</p>
+                    <p>{{ __("My applications") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'icons') active @endif">

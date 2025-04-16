@@ -7,7 +7,7 @@ Tip 2: you can also add an image using data-image tag
     <div class="sidebar-wrapper">
         <div class="logo">
             <a href="http://www.creative-tim.com" class="simple-text">
-                {{ __("GROUP J") }}
+                {{ __("Group J") }}
             </a>
         </div>
         <ul class="nav">
@@ -28,7 +28,7 @@ Tip 2: you can also add an image using data-image tag
 
                         </li>
                         <li class="nav-item @if(($activePage ?? '')=='policies') active @endif">
-                            <a class="nav-link" href="{{route('policies.index')}}">
+                            <a class="nav-link" href="{{route('')}}">
                                 <i class="nc-icon nc-circle-09"></i>
                                 <p>{{ __("Policy") }}</p>
 
