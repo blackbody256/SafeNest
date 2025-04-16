@@ -12,8 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('approved_policies', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+
+            $table->id("Approved_Policy_ID");
+            $table->foreignId("User_ID")->constrained("users", "id")->onDelete("cascade");
+            $table->foreignId("Policy_ID")->constrained("policies", "Policy_ID")->onDelete("cascade");
+            $table->timestamp("expires_at")->nullable(); 
+            $table->string("Status")->default("active");
+            $table->timestamps(); 
+
         });
     }
 

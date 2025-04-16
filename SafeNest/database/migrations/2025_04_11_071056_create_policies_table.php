@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('Title', 50);
             $table->string('Description', 255);
             $table->string('Premium', 50);
-            $table->date('Duration');
+            $table->integer('Duration');
             $table->timestamps();
         });
     }

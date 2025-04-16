@@ -44,6 +44,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+
         // Relationship with Underwriter
         public function underwriter()
         {
@@ -68,5 +69,11 @@ class User extends Authenticatable
         {
             return $this->role === 'customer';
         }
+
+    public function approvedPolicies()
+    {
+        return $this->hasMany(ApprovedPolicy::class, 'user_id');
+    }
+
 }
 

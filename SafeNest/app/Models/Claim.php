@@ -9,15 +9,19 @@ class Claim extends Model
 {
     use HasFactory;
 
+
+    protected $table = 'claims'; 
+
+    protected $primaryKey = 'Claim_ID';
+
+
     protected $fillable = [
         'user_id',
         'Policy_ID',
         'Description',
         'Status',
-        
+
     ];
-
-
 
     public function user()
     {
@@ -26,6 +30,6 @@ class Claim extends Model
 
     public function policy()
     {
-        return $this->belongsTo(Policy::class, 'Policy_ID', 'Policy_ID');
+        return $this->belongsTo(Policy::class, 'Policy_ID','Policy_ID');
     }
 }

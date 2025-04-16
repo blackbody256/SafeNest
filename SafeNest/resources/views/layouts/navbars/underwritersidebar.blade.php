@@ -52,22 +52,22 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Approve Policies") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'typography') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'typography')}}">
+            <li class="nav-item @if($activePage == 'approved-policies') active @endif">
+                <a class="nav-link" href="{{route('approvedpolicies.index', 'typography')}}">
                     <i class="nc-icon nc-paper-2"></i>
-                    <p>{{ __("Typography") }}</p>
+                    <p>{{ __("Approved Policies") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'icons') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'icons')}}">
+            <li class="nav-item @if($activePage == 'claims') active @endif">
+                <a class="nav-link" href="{{route('claims.index')}}">
                     <i class="nc-icon nc-atom"></i>
-                    <p>{{ __("Icons") }}</p>
+                    <p>{{ __("Manage Claims") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'maps') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'maps')}}">
+            <li class="nav-item @if($activePage == 'quotes') active @endif">
+                <a class="nav-link" href="{{route('quotes.index', 'maps')}}">
                     <i class="nc-icon nc-pin-3"></i>
-                    <p>{{ __("Maps") }}</p>
+                    <p>{{ __("Quotes") }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'notifications') active @endif">

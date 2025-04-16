@@ -48,7 +48,7 @@
 
         </div>
        
-
+        @stack('js')
 
     </body>
         <!--   Core JS Files   -->
