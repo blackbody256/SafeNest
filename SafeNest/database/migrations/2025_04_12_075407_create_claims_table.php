@@ -3,7 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 use Illuminate\Support\Facades\DB;
+
 
 return new class extends Migration
 {
@@ -13,6 +15,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('claims', function (Blueprint $table) {
+
+            // $table->id();
+            // $table->unsignedBigInteger('user_id');
+            // $table->unsignedBigInteger('policy_id');
+            // $table->text('description');
+            // $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
+            // $table->date('date_submitted');
+            // $table->timestamps();
+
+            // // Foreign keys
+
             $table->id('Claim_ID');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('Policy_ID');
@@ -21,6 +34,7 @@ return new class extends Migration
             $table->timestamp('Date_submitted')->default(DB::raw('CURRENT_TIMESTAMP'));  // Add Date_submitted here
             $table->timestamps();
     
+
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('policy_id')->references('Policy_ID')->on('policies')->onDelete('cascade');
         });

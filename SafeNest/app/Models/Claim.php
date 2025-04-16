@@ -9,6 +9,7 @@ class Claim extends Model
 {
     use HasFactory;
 
+
     protected $table = 'claims'; 
 
     protected $primaryKey = 'Claim_ID';
@@ -19,6 +20,7 @@ class Claim extends Model
         'Policy_ID',
         'Description',
         'Status',
+
     ];
 
     public function user()

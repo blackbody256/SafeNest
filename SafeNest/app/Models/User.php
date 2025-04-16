@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -43,8 +44,36 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+
+        // Relationship with Underwriter
+        public function underwriter()
+        {
+            return $this->hasOne(Underwriter::class);
+        }
+    
+        // Helper methods
+        public function isAdmin()
+        {
+            return $this->role === 'admin';
+        }
+    
+        public function isUnderwriter()
+        {
+            return $this->role === 'underwriter' && $this->underwriter;
+        }
+        public function getCommissionRateAttribute()
+    {
+        return $this->underwriter ? $this->underwriter->commission_rate : null;
+    }
+        public function isCustomer()
+        {
+            return $this->role === 'customer';
+        }
+
     public function approvedPolicies()
     {
         return $this->hasMany(ApprovedPolicy::class, 'user_id');
     }
+
 }
+

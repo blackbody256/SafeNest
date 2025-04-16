@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('policies', function (Blueprint $table) {
             $table->id('Policy_ID');
             $table->string('Title', 50);
-            $table->string('Description', 50);
+            $table->string('Description', 255);
             $table->string('Premium', 50);
             $table->integer('Duration');
             $table->timestamps();
