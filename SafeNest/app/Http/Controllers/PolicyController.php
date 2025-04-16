@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Policy;
+use App\Models\ApprovedPolicy;
 
 class PolicyController extends Controller
 {
@@ -55,10 +56,27 @@ class PolicyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $policy = Policy::findOrFail($id);
+        $approvedPolicy = ApprovedPolicy::where('Policy_ID', $id)
+            ->where('User_ID', auth()->id())
+            ->first();
+        
+        if (request()->ajax()) {
+            // Return JSON for modal
+            return response()->json([
+                'policy' => $policy,
+                'approvedPolicy' => $approvedPolicy
+            ]);
+        }
+        
+        $title = 'Policy Details';
+        $activePage = 'policies';
+        $activeButton = 'laravel';
+        $navName = 'Policies';
+        
+        return view('customer.policy_details', compact('policy', 'approvedPolicy', 'title', 'activePage', 'activeButton', 'navName'));
     }
-
-    /**
+        /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)

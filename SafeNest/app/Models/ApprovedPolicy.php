@@ -5,26 +5,45 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class ApprovedPolicy extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'Approved_policy_ID'; 
-     
+
+    protected $primaryKey = 'Approved_Policy_ID';
+    
     protected $fillable = [
-        'user_id',
+        'User_ID',
         'Policy_ID',
-       // 'approved_date',
-        'Expiry_Date',
-        'Status'
+        'expires_at',
+        'Status'  // Corrected from 'status' to match your database schema
+    ];
+
+    protected $casts = [
+        'expires_at' => 'datetime',
+
     ];
 
     public function user()
     {
-    return $this->belongsTo(User::class, 'user_id');
+
+        return $this->belongsTo(User::class, 'User_ID');
     }
-    
+
     public function policy()
     {
-    return $this->belongsTo(Policy::class, 'Policy_ID');
+        return $this->belongsTo(Policy::class, 'Policy_ID');
     }
+    
+    // Update the status based on expiration date
+    public function updateStatus()
+    {
+        if ($this->expires_at && Carbon::now()->greaterThan($this->expires_at)) {
+            $this->Status = 'expired';
+            $this->save();
+        }
+    }
+    
+    // Remove the misplaced userPolicies method from here
 }
