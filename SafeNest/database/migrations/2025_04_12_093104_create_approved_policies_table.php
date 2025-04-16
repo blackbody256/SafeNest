@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('policies', function (Blueprint $table) {
-            $table->id('Policy_ID');
-            $table->string('Title', 50);
-            $table->string('Description', 255);
-            $table->string('Premium', 50);
-            $table->date('Duration');
+        Schema::create('approved_policies', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('policies');
+        Schema::dropIfExists('approved_policies');
     }
 };

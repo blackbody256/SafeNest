@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Application extends Model
+class policy_applications extends Model
 {
   //  use HasFactory;
 
@@ -14,7 +14,7 @@ class Application extends Model
     protected $primaryKey = 'Application_ID';
 
     protected $fillable = [
-        'User_ID', 'Policy_ID', 'Status', 'Date_Applied'
+        'User_ID', 'Policy_ID', 'Status','Requirements_path','notes'
     ];
 
     public function user()
@@ -25,5 +25,9 @@ class Application extends Model
     public function policy()
     {
         return $this->belongsTo(Policy::class, 'Policy_ID');
+    }
+
+    public function documents(){
+        return $this->hasMany(policy_applications::class,'application_id');
     }
 }

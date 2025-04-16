@@ -1,10 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use app\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\PolicyController;
+use App\Http\Controllers\Admin\UnderwriterController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Admin\PolicyController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ClaimsController;
+use App\Http\Controllers\Admin\PaymentController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +42,25 @@ Route::get('/admin/dashboard', fn() => view('admin.admindashboard'))
     ->middleware('role:admin')
     ->name('admindashboard');
 
+// Admin routes    
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/claims', [ClaimsController::class, 'index'])->name('admin.claims');
+    Route::get('/policies', [PolicyController::class, 'index'])->name('admin.policies');
+    Route::get('/payments', [PaymentController::class, 'index'])->name('admin.payments');
+
+    // Underwriter management (CRUD)
+    //Route::resource('underwriters', UnderwriterController::class);
+    Route::resource('underwriters', UnderwriterController::class)->names([
+        'index' => 'admin.underwriters.index',
+        'create' => 'admin.underwriters.create',
+        'store' => 'admin.underwriters.store',
+        'edit' => 'admin.underwriters.edit',
+        'update' => 'admin.underwriters.update',
+        'destroy' => 'admin.underwriters.destroy',
+        'show' => 'admin.underwriters.show',
+    ]);
+});
 // Customer route → views/customer/dashboard.blade.php
 Route::get('/customer/dashboard', fn() => view('customer.dashboard'))
     ->middleware('role:customer')

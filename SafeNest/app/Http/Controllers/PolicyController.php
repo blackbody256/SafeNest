@@ -10,7 +10,7 @@ class PolicyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) 
     {
         $policies = Policy::all();
         $title = 'Policies'; 
