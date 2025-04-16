@@ -14,6 +14,6 @@
 </div>
 
 <div class="form-group">
-    <label>Duration</label>
-    <input type="date" name="Duration" value="{{ old('Duration', $policy->Duration ?? '') }}" class="form-control">
+    <label>Duration(in years)</label>
+    <input type="number" name="Duration" value="{{ old('Duration', $policy->Duration ?? '') }}" class="form-control">
 </div>

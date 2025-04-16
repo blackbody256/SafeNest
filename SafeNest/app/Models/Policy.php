@@ -9,6 +9,7 @@ class Policy extends Model
 {
     use HasFactory;
 
+    protected $table = 'policies';
     protected $primaryKey = 'Policy_ID';
 
     protected $fillable = [
@@ -22,5 +23,10 @@ class Policy extends Model
     {
     return $this->hasMany(Application::class, 'Policy_ID');
      }
+
+     public function approvedPolicies()
+    {
+        return $this->hasMany(ApprovedPolicy::class, 'Policy_ID');
+    }
 
 }

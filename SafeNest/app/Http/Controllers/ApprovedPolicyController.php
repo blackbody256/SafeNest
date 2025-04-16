@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\ApprovedPolicy;
 use App\Models\Policy;
 use Illuminate\Http\Request;
@@ -76,3 +75,4 @@ class ApprovedPolicyController extends Controller
         return view('customer.mypolicy', compact('approvedPolicies'));
     }
 }
+

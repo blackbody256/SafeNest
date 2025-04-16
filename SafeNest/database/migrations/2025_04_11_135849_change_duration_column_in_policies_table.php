@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('policies', function (Blueprint $table) {
-            $table->id('Policy_ID');
-            $table->string('Title', 50);
-            $table->string('Description', 50);
-            $table->string('Premium', 50);
-            $table->integer('Duration');
-            $table->timestamps();
+        Schema::table('policies', function (Blueprint $table) {
+            $table->integer('Duration')->change();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('policies');
+        Schema::table('policies', function (Blueprint $table) {
+            //
+        });
     }
 };
