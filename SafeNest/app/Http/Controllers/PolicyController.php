@@ -42,7 +42,7 @@ class PolicyController extends Controller
             'Title' => 'required|string|max:50',
             'Description' => 'required|string|max:50',
             'Premium' => 'required|string|max:50',
-            'Duration' => 'required|date',
+            'Duration' => 'required|integer',
         ]);
 
         Policy::create($request->all());

@@ -5,17 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Application extends Model
+class Quote extends Model
 {
-  //  use HasFactory;
+    use HasFactory;
 
-    protected $table = 'applications';
-
-    protected $primaryKey = 'Application_ID';
-
-    protected $fillable = [
-        'User_ID', 'Policy_ID', 'Status', 'Date_Applied'
-    ];
+    protected $primaryKey = 'Quotes_ID';
+    
+    protected $fillable = ['user_id', 'Policy_ID', 'Description', 'Amount'];
 
     public function user()
     {

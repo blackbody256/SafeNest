@@ -56,10 +56,10 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Maps") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'notifications') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'notifications')}}">
+            <li class="nav-item @if($activePage == 'claims') active @endif">
+                <a class="nav-link" href="{{route('customer.claims.index')}}">
                     <i class="nc-icon nc-bell-55"></i>
-                    <p>{{ __("Notifications") }}</p>
+                    <p>{{ __("Claims") }}</p>
                 </a>
             </li>
         </ul>

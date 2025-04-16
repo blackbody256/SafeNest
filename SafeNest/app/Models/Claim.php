@@ -5,16 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Application extends Model
+class Claim extends Model
 {
-  //  use HasFactory;
+    use HasFactory;
 
-    protected $table = 'applications';
+    protected $table = 'claims'; 
 
-    protected $primaryKey = 'Application_ID';
+    protected $primaryKey = 'Claim_ID';
+
 
     protected $fillable = [
-        'User_ID', 'Policy_ID', 'Status', 'Date_Applied'
+        'user_id',
+        'Policy_ID',
+        'Description',
+        'Status',
     ];
 
     public function user()
@@ -24,6 +28,6 @@ class Application extends Model
 
     public function policy()
     {
-        return $this->belongsTo(Policy::class, 'Policy_ID');
+        return $this->belongsTo(Policy::class, 'Policy_ID','Policy_ID');
     }
 }
