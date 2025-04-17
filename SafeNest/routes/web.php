@@ -148,6 +148,8 @@ Route::post('/approved-policies/{applicationId}', [ApprovedPolicyController::cla
 //claims controller
 Route::get('/underwriter/claims', [ClaimController::class, 'index'])->name('claims.index');
 Route::post('/underwriter/claims/{id}/update-status', [ClaimController::class, 'updateStatus'])->name('claims.updateStatus');
+Route::post('/claims', [ClaimController::class, 'store'])->name('claims.store');
+
 
 //quotes controller
 
