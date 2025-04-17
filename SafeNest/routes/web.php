@@ -149,10 +149,6 @@ Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function
 
 
 
-Route::get('/mypolicies', function () {
-    return view('customer.mypolicy');
-})->name('mypolicies');
-
 // Route::post('/applications/{id}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 
 
