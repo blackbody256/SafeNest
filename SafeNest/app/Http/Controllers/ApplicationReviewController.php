@@ -74,9 +74,9 @@ class ApplicationReviewController extends Controller
         
         // Calculate expiration date
         $approvalDate = Carbon::now();
-        $durationDate = Carbon::parse($policy->Duration);
-        $differenceInDays = $approvalDate->diffInDays($durationDate);
-        $expiresAt = $approvalDate->copy()->addDays($differenceInDays);
+        // Assuming Duration is stored as an integer representing months
+        $durationMonths = intval($policy->Duration);
+        $expiresAt = $approvalDate->copy()->addMonths($durationMonths);
         
         // Create approved policy record
         ApprovedPolicy::create([
