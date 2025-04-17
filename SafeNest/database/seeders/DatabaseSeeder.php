@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class, 
             
             
-            UsersTableSeeder::class,
+            
             
     ]);
     }

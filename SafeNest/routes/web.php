@@ -4,8 +4,16 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\PolicyController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UnderwriterController;
+use App\Http\Controllers\Admin\ClaimsController;
+use App\Http\Controllers\Admin\PoliciesController; // Ensure this matches the actual namespace of the PoliciesController class
+use App\Http\Controllers\Admin\PaymentController;
+
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApprovedPolicyController;
 use App\Http\Controllers\ClaimController;
@@ -85,11 +93,31 @@ Route::get('/redirect-by-role', function () {
 Route::get('/admin/dashboard', fn() => view('admin.admindashboard'))
     ->middleware('role:admin')
     ->name('admindashboard');
+// Admin routes    
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::get('/claims', [ClaimsController::class, 'index'])->name('admin.claims');
+    Route::get('/policies', [PoliciesController::class, 'index'])->name('admin.policies');
+    Route::get('/payments', [PaymentController::class, 'index'])->name('admin.payments');
+
+    // Underwriter management (CRUD)
+    //Route::resource('underwriters', UnderwriterController::class);
+    Route::resource('underwriters', UnderwriterController::class)->names([
+        'index' => 'admin.underwriters.index',
+        'create' => 'admin.underwriters.create',
+        'store' => 'admin.underwriters.store',
+        'edit' => 'admin.underwriters.edit',
+        'update' => 'admin.underwriters.update',
+        'destroy' => 'admin.underwriters.destroy',
+        'show' => 'admin.underwriters.show',
+    ]);
+});
 
 // Customer route → views/customer/dashboard.blade.php
 Route::get('/customer/dashboard', fn() => view('customer.dashboard'))
     ->middleware('role:customer')
     ->name('customerdashboard');
+    
 
 // Underwriter route → views/underwriter/dashboard.blade.php
 Route::get('/underwriter/dashboard', fn() => view('underwriter.dashboard'))
