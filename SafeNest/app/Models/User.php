@@ -72,7 +72,7 @@ class User extends Authenticatable
 
     public function approvedPolicies()
     {
-        return $this->hasMany(ApprovedPolicy::class, 'user_id');
+        return $this->hasMany(ApprovedPolicy::class, 'User_ID');
     }
 
 }

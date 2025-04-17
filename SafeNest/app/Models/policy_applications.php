@@ -25,6 +25,7 @@ class policy_applications extends Model
 
 
     use HasFactory;
+    protected $table = 'policy_applications';
     protected $primaryKey = 'Application_ID'; // <--- THIS IS THE MISSING LINE
     protected $fillable =[
         'User_ID',
