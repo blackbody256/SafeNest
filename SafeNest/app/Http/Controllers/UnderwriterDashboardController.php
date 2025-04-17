@@ -6,7 +6,7 @@ use App\Models\ApprovedPolicy;
 use Illuminate\Http\Request;
 
 
-class underwriterDashboardController extends Controller
+class UnderwriterDashboardController extends Controller
 {
 public function index(Request $request)
 {
