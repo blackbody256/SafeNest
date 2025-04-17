@@ -1,4 +1,3 @@
-{{-- resources/views/underwriter/approvedpolicies/index.blade.php --}}
 @extends('layouts.underwriterapp')
 
 @section('content')
