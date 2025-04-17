@@ -14,6 +14,7 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CustomerClaimController;
 use App\Http\Controllers\PolicyCatalogueController; 
 use App\Http\Controllers\ApplicationReviewController;
+use App\Http\Controllers\UnderwriterDashboardController;
 
 
 /*
@@ -41,6 +42,8 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/my-applications', [PolicyCatalogueController::class, 'myApplications'])->name('my.applications');
     // Add this new route
     Route::get('/my-applications/{id}', [PolicyCatalogueController::class, 'viewApplication'])->name('application.details');
+    Route::post('/request-quote', [QuoteController::class, 'store'])->name('quotes.request');
+
 });
 
 
@@ -66,6 +69,10 @@ Route::middleware(['auth', 'role:underwriter'])->group(function () {
     Route::get('/applications/{id}/download', [ApplicationReviewController::class, 'downloadDocuments'])->name('applications.download');
     Route::post('/applications/{id}/approve', [ApplicationReviewController::class, 'approve'])->name('applications.approve');
     Route::post('/applications/{id}/reject', [ApplicationReviewController::class, 'reject'])->name('applications.reject');
+    Route::get('/underwriter/quotes', [QuoteController::class, 'index'])->name('underwriter.quotes.index');
+    Route::delete('/underwriter/quote/{id}', [QuoteController::class, 'destroy'])->name('underwriter.quotes.index.delete');
+    Route::delete('/underwriter/quotes/expired', [QuoteController::class, 'destroyExpired'])->name('underwriter.quotes.index.deleteExpired');
+   
 });
 
 
@@ -92,9 +99,10 @@ Route::get('/customer/dashboard', fn() => view('customer.dashboard'))
     ->name('customerdashboard');
 
 // Underwriter route → views/underwriter/dashboard.blade.php
-Route::get('/underwriter/dashboard', fn() => view('underwriter.dashboard'))
-    ->middleware('role:underwriter')
+Route::get('/underwriter/dashboard', [UnderwriterDashboardController::class, 'index'])
+    ->middleware('auth', 'role:underwriter')
     ->name('underwriterdashboard');
+
 
 /*Route::get('/dashboard', function () {
     return view('dashboard');
@@ -121,13 +129,6 @@ Route::post('/approved-policies/{applicationId}', [ApprovedPolicyController::cla
 Route::get('/underwriter/claims', [ClaimController::class, 'index'])->name('claims.index');
 Route::post('/underwriter/claims/{id}/update-status', [ClaimController::class, 'updateStatus'])->name('claims.updateStatus');
 
-//quotes controller
-
-// View all quotes (underwriter view)
-Route::get('/underwriter/quotes', [QuoteController::class, 'index'])->name('quotes.index');
-
-// Request a quote for a specific policy (simulate client request)
-Route::post('/request-quote/{policyId}', [QuoteController::class, 'requestQuote'])->name('quotes.request');
 
 // Optional: route to manually test calculation (for your testing)
 Route::get('/test-quote', [QuoteController::class, 'testCalculation']);

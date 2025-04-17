@@ -25,8 +25,22 @@
                     <p><strong>Premium:</strong> {{ $policy->Premium }}</p>
                     <p><strong>Duration:</strong> {{ \Carbon\Carbon::parse($policy->Duration)->format('Y/m/d') ?? 'N/A' }}</p>
                 </div>
-                <div class="card-footer">
-                    <a href="{{ route('policy.application.form', $policy->Policy_ID) }}" class="btn btn-primary">Apply Now</a>
+                {{-- Show quote success under this card only --}}
+                @if(session('quote_policy_id') == $policy->Policy_ID)
+                    <div class="alert alert-success mt-2">
+                        Quote requested successfully! Amount: {{ number_format(session('quote_amount'), 2) }}
+                    </div>
+                @endif
+
+                 <div class="card-footer d-flex justify-content-between">
+                 <form action="{{ route('quotes.request') }}" method="POST">
+                @csrf
+                <input type="hidden" name="policy_id" value="{{ $policy->Policy_ID }}">
+                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                <button type="submit" class="btn btn-warning">Request Quote</button>
+                </form>
+                <a href="{{ route('policy.application.form', $policy->Policy_ID) }}" class="btn btn-primary">Apply Now</a>
+
                 </div>
             </div>
         </div>
