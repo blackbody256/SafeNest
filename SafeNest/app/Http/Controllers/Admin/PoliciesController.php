@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Policy;
 use App\Models\policy_applications;
 
-class PolicyController extends Controller
+class PoliciesController extends Controller
 {
     /**
      * Display a listing of the resource.
