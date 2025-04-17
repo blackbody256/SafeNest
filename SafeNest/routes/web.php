@@ -118,9 +118,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 });
 
 // Customer route → views/customer/dashboard.blade.php
-Route::get('/customer/dashboard', fn() => view('customer.dashboard'))
+Route::get('/customer/dashboard', [ApplicationController::class, 'customerApplications'])
     ->middleware('role:customer')
     ->name('customerdashboard');
+
     
 
 // Underwriter route → views/underwriter/dashboard.blade.php
