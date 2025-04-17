@@ -24,10 +24,15 @@ class ApprovedPolicyController extends Controller
         // Calculate expiration date based on policy duration
         $approvalDate = Carbon::now();
         
-        // Adjust this calculation based on how Duration is stored
-        $durationDate = Carbon::parse($policy->Duration);
-        $differenceInDays = $approvalDate->diffInDays($durationDate);
-        $expiresAt = $approvalDate->copy()->addDays($differenceInDays);
+        // Instead of parsing Duration as a date, use it as months
+        // Try to extract numeric value if it's stored as string
+        $durationValue = 12; // Default to 12 months
+        
+        if (is_numeric($policy->Duration)) {
+            $durationValue = (int)$policy->Duration;
+        }
+        
+        $expiresAt = $approvalDate->copy()->addMonths($durationValue);
         
         // Create the approved policy with calculated expiration
         $approvedPolicy = ApprovedPolicy::create([
@@ -73,6 +78,30 @@ class ApprovedPolicyController extends Controller
         
         // Pass variable to view
         return view('customer.mypolicy', compact('approvedPolicies'));
+    }
+
+    /**
+     * Display a listing of approved policies
+     */
+    public function index()
+    {
+        // Get all approved policies with their relationships
+        $approvedPolicies = ApprovedPolicy::with(['user', 'policy'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
+        // Update status for displayed policies
+        foreach ($approvedPolicies as $policy) {
+            $policy->updateStatus();
+        }
+        
+        return view('underwriter.approvedpolicies.index', [
+            'approvedPolicies' => $approvedPolicies,
+            'title' => 'Approved Policies',
+            'activePage' => 'approvedpolicies',
+            'activeButton' => 'laravel',
+            'navName' => 'Approved Policies'
+        ]);
     }
 }
 

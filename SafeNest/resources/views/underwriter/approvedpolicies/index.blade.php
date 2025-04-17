@@ -10,23 +10,28 @@
                 <thead class="text-primary">
                     <tr>
                         <th>Approved Policy ID</th>
-                        <th>Client (user_id)</th>
-                        <th>Policy ID</th>
+                        <th>Client Name</th>
+                        <th>Policy Title</th>
                         <th>Status</th>
                         <th>Expiry Date</th>
                     </tr>
                 </thead>
                 <tbody>
                 @foreach ($approvedPolicies as $approved)
-          <tr>
-        <td>{{ $approved->Approved_policy_ID }}</td> {{-- Approved Policy ID --}}
-        <td>{{ $approved->user->name ?? 'N/A' }}</td> {{-- User name --}}
-        <td>{{ $approved->policy->Title ?? 'N/A' }}</td> {{-- Policy title --}}
-        <td>{{ $approved->Status }}</td> {{-- Status (active/expired) --}}
-        <td>{{ $approved->Expiry_Date }}</td> {{-- Expiry Date --}}
-          </tr>
+                    <tr>
+                        <td>{{ $approved->Approved_Policy_ID }}</td> {{-- Fixed the capitalization --}}
+                        <td>{{ $approved->user->name ?? 'N/A' }}</td>
+                        <td>{{ $approved->policy->Title ?? 'N/A' }}</td>
+                        <td>
+                            @if(strtolower($approved->Status) == 'active')
+                                <span class="text-success fw-bold">{{ $approved->Status }}</span>
+                            @else
+                                <span class="text-danger fw-bold">{{ $approved->Status }}</span>
+                            @endif
+                        </td>
+                        <td>{{ $approved->expires_at ? $approved->expires_at->format('d/m/Y') : 'N/A' }}</td>
+                    </tr>
                 @endforeach
-
                 </tbody>
             </table>
 
