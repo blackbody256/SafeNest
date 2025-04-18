@@ -10,6 +10,12 @@
         </div>
     @endif
     
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    
     @if($approvedPolicies->isEmpty())
         <p>You don't have any approved policies yet.</p>
     @else
@@ -19,21 +25,58 @@
                     <th>Policy Name</th>
                     <th>Status</th>
                     <th>Expires At</th>
+                    <th>Payment Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
             @foreach($approvedPolicies as $approvedPolicy)
+                @php
+                    // Get payment summary for this policy
+                    $paymentSummary = App\Http\Controllers\PaymentController::getPaymentSummary($approvedPolicy->Approved_Policy_ID);
+                @endphp
                 <tr>
                     <td>{{ $approvedPolicy->policy->Title ?? 'Unknown Policy' }}</td>
                     <td>{{ $approvedPolicy->Status }}</td>
                     <td>{{ $approvedPolicy->expires_at ? $approvedPolicy->expires_at->format('d/m/Y') : 'N/A' }}</td>
+                    <td>
+                        <div>
+                            @if($paymentSummary['overdueCount'] > 0)
+                                <span class="badge bg-danger">{{ $paymentSummary['overdueCount'] }} Overdue</span>
+                            @elseif($paymentSummary['pending'] > 0)
+                                <span class="badge bg-warning text-dark">Payments Pending</span>
+                            @else
+                                <span class="badge bg-success">Fully Paid</span>
+                            @endif
+                        </div>
+                        <small>
+                            Paid: ${{ number_format($paymentSummary['paid'], 2) }} | 
+                            Remaining: ${{ number_format($paymentSummary['pending'], 2) }}
+                        </small>
+                    </td>
                     <td>
                         <button type="button" class="btn btn-sm btn-info view-details" 
                                 data-toggle="modal" data-target="#policyModal" 
                                 data-id="{{ $approvedPolicy->Policy_ID }}">
                             View Details
                         </button>
+                        
+                        @if($paymentSummary['nextPayment'])
+                            <a href="{{ route('customer.payment.view', $approvedPolicy->Approved_Policy_ID) }}" 
+                               class="btn btn-sm btn-primary">
+                                View Payments
+                            </a>
+                            
+                            @if($paymentSummary['nextPayment']->status != 'paid')
+                                <form method="POST" action="{{ route('customer.payment.make', $paymentSummary['nextPayment']->id) }}" 
+                                      style="display: inline-block;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-success">
+                                        Pay Next Installment
+                                    </button>
+                                </form>
+                            @endif
+                        @endif
                     </td>
                 </tr>
             @endforeach

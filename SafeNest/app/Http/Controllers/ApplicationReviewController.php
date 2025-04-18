@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\policy_applications;
 use App\Models\ApprovedPolicy;
+use App\Http\Controllers\PaymentController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-// Store each file as zip
 use Illuminate\Http\Request;
 
 class ApplicationReviewController extends Controller
@@ -79,18 +79,20 @@ class ApplicationReviewController extends Controller
         $expiresAt = $approvalDate->copy()->addMonths($durationMonths);
         
         // Create approved policy record
-        ApprovedPolicy::create([
+        $approvedPolicy = ApprovedPolicy::create([
             'User_ID' => $application->User_ID,
             'Policy_ID' => $application->Policy_ID,
             'expires_at' => $expiresAt,
             'Status' => 'active'
         ]);
         
-        return redirect()->route('applications.index')->with('success', 'Application approved successfully. The policy has been created for the user.');
+        // Generate payment schedule
+        PaymentController::generatePaymentSchedule($approvedPolicy->Approved_Policy_ID);
+        
+        return redirect()->route('applications.index')->with('success', 'Application approved successfully. The policy has been created for the user with a payment schedule.');
     }
 
     // Reject an application.
-
     public function reject(Request $request, $id)
     {
         $request->validate([

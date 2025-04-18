@@ -37,22 +37,23 @@ Tip 2: you can also add an image using data-image tag
 
 
 
-            <li class="nav-item @if($activePage == 'table') active @endif">
+            <li class="nav-item @if($activePage == 'policy.catalogue') active @endif">
                 <a class="nav-link" href="{{route('policy.catalogue')}}">
                     <i class="nc-icon nc-notes"></i>
                     <p>{{ __("Policy Catalogue") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'typography') active @endif">
+
+            <li class="nav-item @if($activePage == 'my.applications') active @endif">
                 <a class="nav-link" href="{{route('my.applications')}}">
                     <i class="nc-icon nc-paper-2"></i>
                     <p>{{ __("My applications") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'icons') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'icons')}}">
-                    <i class="nc-icon nc-atom"></i>
-                    <p>{{ __("Icons") }}</p>
+            <li class="nav-item @if($activePage == 'mypayments') active @endif">
+                <a class="nav-link {{ $activePage == 'mypayments' ? 'active' : '' }}" href="{{ route('customer.payments') }}">
+                    <i class="nc-icon nc-notes"></i>
+                    <p>{{ __('My Payments') }}</p>
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'maps') active @endif">
