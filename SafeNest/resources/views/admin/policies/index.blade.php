@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-7 col-md-8">
                                 <div class="numbers">
-                                    <p class="card-category">Appproved Policies</p>
+                                    <p class="card-category">Approved Policies</p>
                                     <p class="card-title">{{ $approvedPolicies }}</p>
                                 </div>
                             </div>
@@ -70,6 +70,10 @@
                     </div>
                 </div>
             </div>
+
+            
+
+
 
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -104,6 +108,26 @@
                                 <div class="numbers">
                                     <p class="card-category">Rejected Policies</p>
                                     <p class="card-title">{{ $rejectedPolicies }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-5 col-md-4">
+                                <div class="icon-big text-center icon-warning">
+                                    <i class="nc-icon nc-badge text-success"></i>
+                                </div>
+                            </div>
+                            <div class="col-7 col-md-8">
+                                <div class="numbers">
+                                    <p class="card-category">Active Policies</p>
+                                    <p class="card-title">{{ $activePolicies }}</p>
                                 </div>
                             </div>
                         </div>

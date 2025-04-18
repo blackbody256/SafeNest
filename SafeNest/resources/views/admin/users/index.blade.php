@@ -103,12 +103,13 @@
                                     <tr>
                                         <th>User</th>
                                         <th>Role</th>
-                                        <th>Last Login</th>
+                                        <th>Last Created At</th>
+                                        <th>Actions</th>
                     
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($recentUsers as $user)
+                                    @foreach($users as $user)
                                     <tr>
                                         <td>
                                             <div class="d-flex align-items-center">
@@ -121,6 +122,18 @@
                                         </td>
                                         <td>{{ ucfirst($user->role) }}</td>
                                         <td>{{ $user->created_at ? $user->created_at->diffForHumans() : 'Never' }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+
+                                                <!-- Delete Button -->
+                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this user?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
                                         
                                     </tr>
                                     @endforeach
@@ -133,4 +146,27 @@
         </div>
     </div>
 </div>
+
+<style>
+
+.btn-sm {
+        min-width: 80px;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        margin-left: 5px;
+        margin-right: 5px;
+        color: #fff;
+        
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        
+    }
+    .btn-danger:hover {
+        
+        border-color: #bd2130;
+    }
+</style>    
 @endsection

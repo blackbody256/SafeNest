@@ -22,6 +22,7 @@ class Claim extends Model
         'Status',
         'attachment',
 
+
     ];
 
     public function user()
