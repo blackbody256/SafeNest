@@ -31,7 +31,7 @@
   <!-- Home Section -->
   <section class="home" id="home">
     <div class="content">
-      <h3><span>Insuance</span>partner</h3>
+      <h3><span>Insurance</span>partner</h3>
       <a href="{{ route('register') }}" class="btn {{ Route::is('register') ? 'active' : '' }}">
         <i class="nc-icon nc-badge"></i> {{ __('Register Now') }}
       </a>
@@ -133,11 +133,23 @@
     <h1 class="heading"><span>Contact</span>us</h1>
 
     <div class="row">
-        <form action="">
-            <input type="text" placeholder="name" class="box">
-            <input type="email" placeholder="email" class="box">
-            <input type="tel" placeholder="Phone Number" class="box" pattern="[0-9+ ]+">
-            <textarea name="" id="" class="box" placeholder="message" cols="30" rows="10"></textarea>
+
+<!--success message for sending message.-->
+    @if(session('success'))
+        <script>
+            window.onload = function() {
+                alert("{{ session('success') }}");
+            };
+        </script>
+    @endif
+
+
+        <form action="{{ route('contact.send') }}" method="POST">
+            @csrf
+            <input type="text" name="name" placeholder="name" class="box">
+            <input type="email" name="email" placeholder="email" class="box">
+            <input type="tel" name="phone" class="box"  placeholder="phone number"  pattern="[0-9+ ]+">
+            <textarea name="message" id="" class="box" placeholder="message" cols="30" rows="10"></textarea>
             <input type="submit" value="send" class="btn">
         </form>
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
 
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\Admin\UserController;
@@ -40,9 +41,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//for sending email
+
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
 
-// Andrew's policy Catalogue Routes not touch.
+// Andrew's policy Catalogue Routes do not touch.
 Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/policy-catalogue', [PolicyCatalogueController::class, 'index'])->name('policy.catalogue');
     Route::get('/policy-catalogue/{id}/apply', [PolicyCatalogueController::class, 'showApplicationForm'])->name('policy.application.form');
@@ -121,9 +125,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 });
 
 // Customer route → views/customer/dashboard.blade.php
-Route::get('/customer/dashboard', fn() => view('customer.dashboard'))
+Route::get('/customer/dashboard', [ApplicationController::class, 'customerApplications'])
     ->middleware('role:customer')
     ->name('customerdashboard');
+
     
 
 // Underwriter route → views/underwriter/dashboard.blade.php
