@@ -6,41 +6,52 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Underwriter;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UnderwriterWelcomeMail;
 
 class UnderwriterController extends Controller
 {
     public function index()
     {
         $underwriters = Underwriter::with('user')->latest()->paginate(10);
-        
+
         return view('admin.underwriters.index', compact('underwriters'));
     }
 
     public function create()
     {
-        $users = User::where('role', '!=', 'underwriter')
-                   ->where('role', '!=', 'admin')
-                   ->doesntHave('underwriter')
-                   ->get();
-                   
-        return view('admin.underwriters.create', compact('users'));
+        return view('admin.underwriters.create');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'user_id' => 'required|exists:users,id|unique:underwriters'
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'commission_rate' => 'nullable|numeric|between:0,100',
         ]);
 
-        // Update user role
-        $user = User::find($request->user_id);
-        $user->update(['role' => 'underwriter']);
+        // Create user with 'underwriter' role
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'role' => 'underwriter',
+        ]);
 
-        // Create underwriter profile with default 5% commission
-        Underwriter::create(['user_id' => $user->id]);
+        // Create underwriter profile
+        $underwriter = Underwriter::create([
+            'user_id' => $user->id,
+            'commission_rate' => $validated['commission_rate'] ?? 5.00,
+        ]);
 
-        return redirect()->route('admin.underwriters.index')
-               ->with('success', 'Underwriter created with 5% commission!');
+        // Send welcome email with the original password
+        Mail::to($user->email)->send(new UnderwriterWelcomeMail($user->name, $validated['password']));
+
+        return redirect()->route('admin.underwriters.edit', $underwriter->id)
+            ->with('success', 'Underwriter created and welcome email sent!');
     }
 
     public function edit(Underwriter $underwriter)
@@ -57,16 +68,19 @@ class UnderwriterController extends Controller
         $underwriter->update($validated);
 
         return redirect()->route('admin.underwriters.index')
-               ->with('success', 'Commission rate updated!');
+            ->with('success', 'Commission rate updated!');
     }
 
     public function destroy(Underwriter $underwriter)
-    {
-        // Revert user role to customer
-        $underwriter->user->update(['role' => 'customer']);
-        
-        $underwriter->delete();
+{
+    // Demote user to customer
+    $underwriter->user->update(['role' => 'customer']);
 
-        return back()->with('success', 'Underwriter removed!');
-    }
+    // Delete the underwriter profile
+    $underwriter->delete();
+
+    return redirect()->route('admin.underwriters.index')
+        ->with('success', 'Underwriter has been demoted to customer and deleted.');
+}
+
 }

@@ -1,9 +1,4 @@
 <div class="sidebar" data-image="{{ asset('light-bootstrap/img/sidebar-5.jpg') }}">
-    <!--
-Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-Tip 2: you can also add an image using data-image tag
--->
     <div class="sidebar-wrapper">
         <div class="logo">
             <a href="http://www.creative-tim.com" class="simple-text">
@@ -12,69 +7,44 @@ Tip 2: you can also add an image using data-image tag
         </div>
         <ul class="nav">
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
-                <a class="nav-link" href="{{route('admindashboard')}}">
+                <a class="nav-link" href="{{ route('admindashboard') }}">
                     <i class="nc-icon nc-chart-pie-35"></i>
                     <p>{{ __("Dashboard") }}</p>
                 </a>
             </li>
-           
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#laravelExamples" @if($activeButton =='laravel') aria-expanded="true" @endif>
-                    <i>
-                        <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px">
-                    </i>
-                    <p>
-                        {{ __('Laravel example') }}
-                        <b class="caret"></b>
-                    </p>
+
+            <li class="nav-item @if($activePage == 'users') active @endif">
+                <a class="nav-link" href="{{ route('admin.users.index') }}">
+                    <i class="nc-icon nc-single-02"></i>
+                    <p>{{ __("Manage Users") }}</p>
                 </a>
-                <div class="collapse @if($activeButton =='laravel') show @endif" id="laravelExamples">
-                    <ul class="nav">
-                        <li class="nav-item @if($activePage == 'user') active @endif">
-                            <a class="nav-link" href="{{route('profile.edit')}}">
-                                <i class="nc-icon nc-single-02"></i>
-                                <p>{{ __("User Profile") }}</p>
-                            </a>
-                        </li>
-                        
-                    </ul>
-                </div>
             </li>
 
-            <li class="nav-item @if($activePage == 'table') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'table')}}">
-                    <i class="nc-icon nc-notes"></i>
-                    <p>{{ __("Table List") }}</p>
+            <li class="nav-item @if($activePage == 'policies') active @endif">
+                <a class="nav-link" href="{{ route('admin.policies') }}">
+                    <i class="nc-icon nc-bullet-list-67"></i>
+                    <p>{{ __("Policies") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'typography') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'typography')}}">
+
+            <li class="nav-item @if($activePage == 'claims') active @endif">
+                <a class="nav-link" href="{{ route('admin.claims') }}">
                     <i class="nc-icon nc-paper-2"></i>
-                    <p>{{ __("Typography") }}</p>
+                    <p>{{ __("Claims") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'icons') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'icons')}}">
-                    <i class="nc-icon nc-atom"></i>
-                    <p>{{ __("Icons") }}</p>
+
+            <li class="nav-item @if($activePage == 'underwriters') active @endif">
+                <a class="nav-link" href="{{ route('admin.underwriters.index') }}">
+                    <i class="nc-icon nc-badge"></i>
+                    <p>{{ __("Underwriters") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'maps') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'maps')}}">
-                    <i class="nc-icon nc-pin-3"></i>
-                    <p>{{ __("Maps") }}</p>
-                </a>
-            </li>
-            <li class="nav-item @if($activePage == 'notifications') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'notifications')}}">
-                    <i class="nc-icon nc-bell-55"></i>
-                    <p>{{ __("Notifications") }}</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active bg-danger" href="{{route('page.index', 'upgrade')}}">
-                    <i class="nc-icon nc-alien-33"></i>
-                    <p>{{ __("Upgrade to PRO") }}</p>
+
+            <li class="nav-item @if($activePage == 'payments') active @endif">
+                <a class="nav-link" href="{{ route('admin.payments') }}">
+                    <i class="nc-icon nc-credit-card"></i>
+                    <p>{{ __("Payments") }}</p>
                 </a>
             </li>
         </ul>

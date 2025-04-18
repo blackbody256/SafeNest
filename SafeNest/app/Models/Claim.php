@@ -20,6 +20,7 @@ class Claim extends Model
         'Policy_ID',
         'Description',
         'Status',
+        'attachment'
 
     ];
 

@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\UnderwriterController;
 use App\Http\Controllers\Admin\ClaimsController;
 use App\Http\Controllers\Admin\PoliciesController; // Ensure this matches the actual namespace of the PoliciesController class
 use App\Http\Controllers\Admin\PaymentController;
-
+use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApprovedPolicyController;
 use App\Http\Controllers\ClaimController;
@@ -90,12 +90,13 @@ Route::get('/redirect-by-role', function () {
 })->middleware('auth');
 
 // Admin route → views/admin/admindashboard.blade.php
-Route::get('/admin/dashboard', fn() => view('admin.admindashboard'))
+Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])
     ->middleware('role:admin')
     ->name('admindashboard');
 // Admin routes    
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     Route::get('/claims', [ClaimsController::class, 'index'])->name('admin.claims');
     Route::get('/policies', [PoliciesController::class, 'index'])->name('admin.policies');
     Route::get('/payments', [PaymentController::class, 'index'])->name('admin.payments');

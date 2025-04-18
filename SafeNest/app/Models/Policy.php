@@ -62,7 +62,7 @@ class Policy extends Model
 
     public function applications()
     {
-    return $this->hasMany(Application::class, 'Policy_ID');
+    return $this->hasMany(policy_applications::class, 'Policy_ID');
      }
 
      public function approvedPolicies()

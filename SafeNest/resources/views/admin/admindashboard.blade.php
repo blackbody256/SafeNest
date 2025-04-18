@@ -1,72 +1,55 @@
 @extends('layouts.adminapp', ['activePage' => 'dashboard', 'title' => 'Admin Dashboard | Safe Nest Insurance System', 'navName' => 'Admin Dashboard', 'activeButton' => 'laravel'])
 
+
 @section('content')
 <div class="content">
     <div class="container-fluid">
-        <div class="row">
-            {{-- User Management Card --}}
-            <div class="col-md-6">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Manage Users</h5>
-                        <p class="card-category">View users</p>
-                        <a href="{{ route('admin.users.index') }}" class="btn btn-primary">Go to Users</a>
-                    </div>
-                </div>
-            </div>
-            {{-- Policies Card --}}
-            <div class="col-md-6">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Policies</h5>
-                        <p class="card-category">View Policies and Policy Application</p>
-                        <a href="{{ route('admin.policies') }}" class="btn btn-primary">Go to Policies</a>
-                    </div>
-                </div>
-            </div>
+        <div class="card">
+            <div class="card-body text-center">
+                <h2 class="font-weight-bold">Welcome to the Safe Nest Admin Dashboard</h2>
+                <p class="lead">Hey 👋 {{ auth()->user()->name }}, here you can manage users, policies, claims, payments, and underwriters all in one place.</p>
 
-            {{-- Claims Card --}}
-            <div class="col-md-6">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Claims</h5>
-                        <p class="card-category">View claims</p>
-                        <a href="{{ route('admin.claims') }}" class="btn btn-primary">Manage Claims</a>
-                    </div>
-                </div>
+                <p class="lead">Use the navigation menu on the left to access different sections of the admin panel.</p>
             </div>
-
-            {{-- Underwriters Card --}}
-            <div class="col-md-6">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Underwriters</h5>
-                        <p class="card-category">Create or manage underwriters</p>
-                        <a href="{{ route('admin.underwriters.index') }}" class="btn btn-primary">Manage Underwriters</a>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <div class="row">
-            
-
-            {{-- Payments Card --}}
-            <div class="col-md-6">
-                <div class="card text-center">
+        {{-- You can add analytics or stats below if you like --}}
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card card-stats">
                     <div class="card-body">
-                        <h5 class="card-title">Payments</h5>
-                        <p class="card-category">Monitor payments and logs</p>
-                        <a href="{{ route('admin.payments') }}" class="btn btn-primary">View Payments</a>
+                        <div class="numbers text-center">
+                            <p class="card-category">Total Users</p>
+                            <h4 class="card-title">{{ $userCount }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats">
+                    <div class="card-body">
+                        <div class="numbers text-center">
+                            <p class="card-category">Active Policies</p>
+                            <h4 class="card-title">{{ $policyCount }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-stats">
+                    <div class="card-body">
+                        <div class="numbers text-center">
+                            <p class="card-category">Pending Claims</p>
+                            <h4 class="card-title">{{ $claimCount }}</h4>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 @endsection
-
 
 @push('js')
     <script type="text/javascript">

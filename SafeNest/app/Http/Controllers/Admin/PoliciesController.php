@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApprovedPolicy;
 use Illuminate\Http\Request;
 use App\Models\Policy;
 use App\Models\policy_applications;
@@ -20,6 +21,7 @@ class PoliciesController extends Controller
         $pendingPolicies = policy_applications::where('status', 'pending')->count();
         $rejectedPolicies = policy_applications::where('status', 'rejected')->count();
         $recentPolicies = Policy::latest('created_at')->take(10)->get();
+        $activePolicies=ApprovedPolicy::where('Status', 'active') ->count();
         
         $recentApplications = policy_applications::with(['user', 'policy'])
                         ->latest('created_at')
@@ -33,7 +35,8 @@ class PoliciesController extends Controller
             'pendingPolicies' => $pendingPolicies,
             'rejectedPolicies' => $rejectedPolicies,
             'recentPolicies' => $recentPolicies,
-            'recentApplications' => $recentApplications
+            'recentApplications' => $recentApplications,
+            'activePolicies' => $activePolicies
         ]
     
     );

@@ -1,38 +1,75 @@
 @extends('layouts.adminapp', [
     'activePage' => 'underwriters',
-    'title' => 'Edit Underwriter',
+    'title' => 'Underwriters',
     'navName' => 'Underwriters',
     'activeButton' => 'laravel'
 ])
 
 @section('content')
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Update Commission Rate</h4>
-                    </div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('admin.underwriters.update', $underwriter) }}">
-                            @csrf @method('PUT')
-                            
-                            <div class="form-group">
-                                <label>Current Commission Rate</label>
-                                <input type="number" step="0.01" min="0" max="100" 
-                                       name="commission_rate" class="form-control"
-                                       value="{{ old('commission_rate', $underwriter->commission_rate) }}" required>
-                            </div>
-                            
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Update Rate
-                            </button>
-                        </form>
-                    </div>
+<div class="container mt-5">
+    <div class="card shadow-sm rounded-3">
+        <div class="card-body">
+            <h1 class="card-title mb-4 fw-bold text-dark">Edit Underwriter</h1>
+
+            <form action="{{ route('admin.underwriters.update', $underwriter) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input 
+                        type="text" 
+                        name="name" 
+                        id="name" 
+                        class="form-control bg-light text-muted" 
+                        value="{{ $underwriter->user->name }}" 
+                        disabled>
                 </div>
-            </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        class="form-control bg-light text-muted" 
+                        value="{{ $underwriter->user->email }}" 
+                        disabled>
+                </div>
+
+                <div class="mb-4">
+                    <label for="commission_rate" class="form-label">Commission Rate (%)</label>
+                    <input 
+                        type="number" 
+                        name="commission_rate" 
+                        id="commission_rate" 
+                        class="form-control" 
+                        value="{{ $underwriter->commission_rate }}" 
+                        min="0" 
+                        max="100" 
+                        required>
+                </div>
+
+                <div class="text-end">
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary px-4 py-2 shadow-sm">
+                        Update Rate
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<style>
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+    .btn-primary:hover {
+        
+        border-color: #004085;
+    }
+</style>
 @endsection

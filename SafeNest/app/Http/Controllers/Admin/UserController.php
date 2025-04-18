@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Mail\UserDeletedNotification;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -18,14 +20,14 @@ class UserController extends Controller
         $underwritersCount = User::where('role', 'underwriter')->count();
         $customersCount = User::where('role', 'customer')->count();
         $adminsCount = User::where('role', 'admin')->count();
-        $recentUsers = User::latest('created_at')->take(10)->get();
+        $users = User::orderBy('created_at', 'desc')->paginate(10);
 
         return view('admin.users.index', [
             'totalUsers' => $totalUsers,
             'underwritersCount' => $underwritersCount,
             'customersCount' => $customersCount,
             'adminsCount' => $adminsCount,
-            'recentUsers' => $recentUsers
+            'users' => $users
     ]);
     }
 
@@ -72,8 +74,19 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
-        //
-    }
+    public function destroy($id)
+{
+    $user = User::findOrFail($id);
+    $userEmail = $user->email;
+    $userName = $user->name;
+
+    // Send email before deletion
+    Mail::to($userEmail)->send(new UserDeletedNotification($userName));
+
+    // Delete user
+    $user->delete();
+
+    return redirect()->route('admin.users.index')->with('success', 'User deleted and notified.');
+}
+
 }
