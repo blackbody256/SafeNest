@@ -35,14 +35,12 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $application->policy->Title ?? 'N/A' }}</td>
                                     <td>
-                                        @if($application->Status == 'Pending')
+                                        @if(strtolower($application->Status) == 'pending')
                                             <span class="badge bg-warning text-dark">Pending</span>
-                                        @elseif($application->Status == 'Approved')
+                                        @elseif(strtolower($application->Status) == 'approved')
                                             <span class="badge bg-success">Approved</span>
-                                        @elseif($application->Status == 'Rejected')
+                                        @else(strtolower($application->Status) == 'rejected')
                                             <span class="badge bg-danger">Rejected</span>
-                                        @else
-                                            <span class="badge bg-secondary">Unknown</span>
                                         @endif
                                     </td>
                                 </tr>
