@@ -28,7 +28,7 @@ Tip 2: you can also add an image using data-image tag
 
                         </li>
                         <li class="nav-item @if(($activePage ?? '')=='policies') active @endif">
-                            <a class="nav-link" href="{{route('')}}">
+                            <a class="nav-link" href="{{route('mypolicies')}}">
                                 <i class="nc-icon nc-circle-09"></i>
                                 <p>{{ __("Policy") }}</p>
 

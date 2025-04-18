@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ContactController;
 
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\Admin\UserController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CustomerClaimController;
 use App\Http\Controllers\PolicyCatalogueController; 
 use App\Http\Controllers\ApplicationReviewController;
+use App\Http\Controllers\UnderwriterDashboardController;
 
 
 /*
@@ -39,9 +41,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//for sending email
+
+Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.send');
 
 
-// Andrew's policy Catalogue Routes not touch.
+// Andrew's policy Catalogue Routes do not touch.
 Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/policy-catalogue', [PolicyCatalogueController::class, 'index'])->name('policy.catalogue');
     Route::get('/policy-catalogue/{id}/apply', [PolicyCatalogueController::class, 'showApplicationForm'])->name('policy.application.form');
@@ -49,6 +54,8 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/my-applications', [PolicyCatalogueController::class, 'myApplications'])->name('my.applications');
     // Add this new route
     Route::get('/my-applications/{id}', [PolicyCatalogueController::class, 'viewApplication'])->name('application.details');
+    Route::post('/request-quote', [QuoteController::class, 'store'])->name('quotes.request');
+
 });
 
 
@@ -74,6 +81,10 @@ Route::middleware(['auth', 'role:underwriter'])->group(function () {
     Route::get('/applications/{id}/download', [ApplicationReviewController::class, 'downloadDocuments'])->name('applications.download');
     Route::post('/applications/{id}/approve', [ApplicationReviewController::class, 'approve'])->name('applications.approve');
     Route::post('/applications/{id}/reject', [ApplicationReviewController::class, 'reject'])->name('applications.reject');
+    Route::get('/underwriter/quotes', [QuoteController::class, 'index'])->name('underwriter.quotes.index');
+    Route::delete('/underwriter/quote/{id}', [QuoteController::class, 'destroy'])->name('underwriter.quotes.index.delete');
+    Route::delete('/underwriter/quotes/expired', [QuoteController::class, 'destroyExpired'])->name('underwriter.quotes.index.deleteExpired');
+   
 });
 
 
@@ -115,15 +126,17 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 });
 
 // Customer route → views/customer/dashboard.blade.php
-Route::get('/customer/dashboard', fn() => view('customer.dashboard'))
+Route::get('/customer/dashboard', [ApplicationController::class, 'customerApplications'])
     ->middleware('role:customer')
     ->name('customerdashboard');
+
     
 
 // Underwriter route → views/underwriter/dashboard.blade.php
-Route::get('/underwriter/dashboard', fn() => view('underwriter.dashboard'))
-    ->middleware('role:underwriter')
+Route::get('/underwriter/dashboard', [UnderwriterDashboardController::class, 'index'])
+    ->middleware('auth', 'role:underwriter')
     ->name('underwriterdashboard');
+
 
 /*Route::get('/dashboard', function () {
     return view('dashboard');
@@ -149,14 +162,9 @@ Route::post('/approved-policies/{applicationId}', [ApprovedPolicyController::cla
 //claims controller
 Route::get('/underwriter/claims', [ClaimController::class, 'index'])->name('claims.index');
 Route::post('/underwriter/claims/{id}/update-status', [ClaimController::class, 'updateStatus'])->name('claims.updateStatus');
+Route::post('/claims', [ClaimController::class, 'store'])->name('claims.store');
 
-//quotes controller
 
-// View all quotes (underwriter view)
-Route::get('/underwriter/quotes', [QuoteController::class, 'index'])->name('quotes.index');
-
-// Request a quote for a specific policy (simulate client request)
-Route::post('/request-quote/{policyId}', [QuoteController::class, 'requestQuote'])->name('quotes.request');
 
 // Optional: route to manually test calculation (for your testing)
 Route::get('/test-quote', [QuoteController::class, 'testCalculation']);
@@ -177,10 +185,6 @@ Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function
 
 
 
-
-Route::get('/mypolicies', function () {
-    return view('customer.mypolicy');
-})->name('mypolicies');
 
 // Route::post('/applications/{id}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 
@@ -213,6 +217,27 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     ->middleware('auth')
     ->name('admin.dashboard');*/
 
+
+// Customer payment routes
+Route::middleware(['auth', 'role:customer'])->group(function () {
+    // View all payments
+    Route::get('/customer/payments', [App\Http\Controllers\PaymentController::class, 'index'])
+        ->name('customer.payments');
+    
+    // View payments for a specific policy
+    Route::get('/customer/payments/policy/{approvedPolicyId}', [App\Http\Controllers\PaymentController::class, 'viewPolicyPayments'])
+        ->name('customer.payment.view');
+    
+    // Make payment
+    Route::post('/customer/payments/{paymentId}/pay', [App\Http\Controllers\PaymentController::class, 'makePayment'])
+        ->name('customer.payment.make');
+});
+
+// @Treasure or Humpho Admin and Underwriter routes
+Route::middleware(['auth', 'role:admin,underwriter'])->group(function () {
+    // Administrative payment management can be added here if needed
+    // ...
+});
 
 
 

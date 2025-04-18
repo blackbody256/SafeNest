@@ -65,7 +65,7 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'quotes') active @endif">
-                <a class="nav-link" href="{{route('quotes.index', 'maps')}}">
+            <a class="nav-link" href="{{ route('underwriter.quotes.index') }}">
                     <i class="nc-icon nc-pin-3"></i>
                     <p>{{ __("Quotes") }}</p>
                 </a>

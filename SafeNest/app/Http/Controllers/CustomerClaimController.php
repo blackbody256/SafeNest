@@ -53,7 +53,14 @@ class CustomerClaimController extends Controller
         $request->validate([
             'policy_id' => 'required|exists:policies,Policy_ID',
             'description' => 'required|string|max:255',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Limit to 2MB
         ]);
+
+        $path = null;
+
+          if ($request->hasFile('attachment')) {
+               $path = $request->file('attachment')->store('claims_attachments', 'public');
+                 }
     
         // // Ensure the user is authenticated
         // if (!auth()->check()) {
@@ -67,6 +74,8 @@ class CustomerClaimController extends Controller
             'Policy_ID' => $request->policy_id,
             'Description' => $request->description, // Make sure the field is consistent with the DB column
             'Status' => 'pending', // Initial status is 'Pending'
+            'attachment' => $path,
+
         ]);
 
        // dd($claim);

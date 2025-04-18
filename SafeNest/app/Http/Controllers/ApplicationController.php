@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Log;
 
 use App\Models\ApprovedPolicy;
 use Carbon\Carbon;
+use App\Models\policy_applications;
+
 
 class ApplicationController extends Controller
 {
@@ -138,5 +140,25 @@ public function approve($id)
 
         return redirect()->route('applications.index')->with('success', 'Policy rejected successfully.');
     }
+
+    //customer dashboard
+        public function customerApplications()
+    {
+        // Get only the applications of the logged-in customer (user)
+        $userId = auth()->id();
+
+        $applications = \App\Models\policy_applications::where('User_ID', $userId)
+                        ->with('policy')
+                        ->get();
+
+        return view('customer.dashboard', [
+            'applications' => $applications,
+            'title' => 'Dashboard', 
+            'activePage' => 'dashboard', 
+            'activeButton' => 'dashboard', 
+            'navName' => 'Dashboard'
+        ]);
+    }
+
 }
 
