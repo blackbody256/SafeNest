@@ -14,9 +14,17 @@ class ProfileController extends Controller
      * @return \Illuminate\View\View
      */
     public function edit()
-    {
-        return view('profile.edit');
-    }
+{
+    $role = auth()->user()->role;
+
+    return match($role) {
+        'admin' => view('profile.admin.edit'),
+        'underwriter' => view('profile.underwriter.edit'),
+        'customer' => view('profile.customer.edit'),
+        default => abort(403),
+    };
+}
+
 
     /**
      * Update the profile

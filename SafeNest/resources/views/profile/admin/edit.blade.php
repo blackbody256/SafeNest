@@ -1,13 +1,14 @@
-@extends('layouts.customerapp', ['activePage' => 'user', 'title' => 'Light Bootstrap Dashboard Laravel by Creative Tim & UPDIVISION', 'navName' => 'User Profile', 'activeButton' => 'laravel'])
+@extends('layouts.adminapp', ['activePage' => 'user', 'title' => 'SafeNest', 'navName' => 'User Profile', 'activeButton' => 'laravel'])
 
 @section('content')
     <div class="content">
         <div class="container-fluid">
             <div class="section-image">
                 <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
-                <div class="row">
+                <div class="row justify-content-center">
 
-                    <div class="card col-md-8">
+                    <div class="col-md-8">
+                    <div class="card shadow-lg rounded-lg border-0">
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-md-8">
@@ -86,6 +87,7 @@
                                 </div>
                             </form>
                         </div>
+                       </div>
                     </div>
                 </div>
             </div>
