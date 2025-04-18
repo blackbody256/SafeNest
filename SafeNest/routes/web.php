@@ -217,6 +217,27 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
     ->name('admin.dashboard');*/
 
 
+// Customer payment routes
+Route::middleware(['auth', 'role:customer'])->group(function () {
+    // View all payments
+    Route::get('/customer/payments', [App\Http\Controllers\PaymentController::class, 'index'])
+        ->name('customer.payments');
+    
+    // View payments for a specific policy
+    Route::get('/customer/payments/policy/{approvedPolicyId}', [App\Http\Controllers\PaymentController::class, 'viewPolicyPayments'])
+        ->name('customer.payment.view');
+    
+    // Make payment
+    Route::post('/customer/payments/{paymentId}/pay', [App\Http\Controllers\PaymentController::class, 'makePayment'])
+        ->name('customer.payment.make');
+});
+
+// @Treasure or Humpho Admin and Underwriter routes
+Route::middleware(['auth', 'role:admin,underwriter'])->group(function () {
+    // Administrative payment management can be added here if needed
+    // ...
+});
+
 
 
 
