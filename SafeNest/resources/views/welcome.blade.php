@@ -122,7 +122,8 @@
 
             </div>
         </div>
-        <a href="#" class="btn">view customized policies</a>
+        <a href="{{ route('customer.homepolicies') }}" class="btn">View other Policies</a>
+
 
     </div>
   </section>    
@@ -159,6 +160,13 @@
     </div>
 
   </section>
+
+  <!-- Footer -->
+<footer>
+<i class="nc-icon nc-atom"></i>
+<p>Makerere University Block B, P.O Box 7012, Kampala,Uganda.</p>
+  © 2025 SafeNest. All rights reserved.
+</footer>
 
 
 </body>

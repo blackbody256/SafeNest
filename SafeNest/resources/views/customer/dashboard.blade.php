@@ -10,7 +10,6 @@
             <div class="card bg-dark text-white shadow-sm rounded">
                 <div class="card-body text-center">
                     <h4 class="mb-0">👋 Welcome Esteemed Client</h4>
-                    <p class="mb-0 mt-2">Here you can view your policy applications easily.</p>
                 </div>
             </div>
         </div>
@@ -36,14 +35,12 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $application->policy->Title ?? 'N/A' }}</td>
                                     <td>
-                                        @if($application->Status == 'Pending')
+                                        @if(strtolower($application->Status) == 'pending')
                                             <span class="badge bg-warning text-dark">Pending</span>
-                                        @elseif($application->Status == 'Approved')
+                                        @elseif(strtolower($application->Status) == 'approved')
                                             <span class="badge bg-success">Approved</span>
-                                        @elseif($application->Status == 'Rejected')
+                                        @else(strtolower($application->Status) == 'rejected')
                                             <span class="badge bg-danger">Rejected</span>
-                                        @else
-                                            <span class="badge bg-secondary">Unknown</span>
                                         @endif
                                     </td>
                                 </tr>

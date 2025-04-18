@@ -116,4 +116,16 @@ class PolicyController extends Controller
         Policy::destroy($id);
         return redirect()->route('policies.index')->with('success', 'Policy deleted successfully.');
     }
+
+    //for the home display of policies
+        public function customerPolicies()
+        {
+        $policies = Policy::all();
+        $title = 'Available Policies';
+        $activePage = 'customer_policies';
+        $activeButton = 'laravel';
+        $navName = 'Policies';
+        return view('customer.homepolicies', compact('policies', 'title', 'activePage','activeButton','navName'));
+        }
+
 }

@@ -5,15 +5,16 @@ Tip 1: You can change the color of the sidebar using: data-color="purple | blue 
 Tip 2: you can also add an image using data-image tag
 -->
     <div class="sidebar-wrapper">
-        <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
-                {{ __("Safe Nest") }}
+        <div class="logo" style="text-align: center; padding: 20px 0;">
+            <a href="{{ route('welcome') }}" class="simple-text" style="font-size: 1.5rem; font-weight: bold; color: #333; text-decoration: none; text-transform: none;">
+                SafeNest<span style="color: white;">.</span>
             </a>
         </div>
+
         <ul class="nav">
             <li class="nav-item @if($activePage == 'dashboard') active @endif">
                 <a class="nav-link" href="{{route('customerdashboard')}}">
-                    <i class="nc-icon nc-chart-pie-35"></i>
+                    <i class="nc-icon nc-atom"></i>
                     <p>{{ __("Dashboard") }}</p>
                 </a>
             </li>

@@ -39,7 +39,7 @@ use App\Http\Controllers\UnderwriterDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 //for sending email
 
@@ -145,6 +145,10 @@ Route::get('/underwriter/dashboard', [UnderwriterDashboardController::class, 'in
 
 //policy controller
 Route::resource('policies', PolicyController::class);
+
+//home policies
+Route::get('/customer/homepolicies', [PolicyController::class, 'customerPolicies'])->name('customer.homepolicies');
+
 
 // Add a route to view policy details
 Route::get('/policies/{id}', [PolicyController::class, 'show'])
