@@ -10,7 +10,6 @@
             <div class="card bg-dark text-white shadow-sm rounded">
                 <div class="card-body text-center">
                     <h4 class="mb-0">👋 Welcome Esteemed Client</h4>
-                    <p class="mb-0 mt-2">Here you can view your policy applications easily.</p>
                 </div>
             </div>
         </div>

@@ -39,7 +39,7 @@ use App\Http\Controllers\UnderwriterDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 //for sending email
 

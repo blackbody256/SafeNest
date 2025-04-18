@@ -163,6 +163,8 @@
 
   <!-- Footer -->
 <footer>
+<i class="nc-icon nc-atom"></i>
+<p>Makerere University Block B, P.O Box 7012, Kampala,Uganda.</p>
   © 2025 SafeNest. All rights reserved.
 </footer>
 
