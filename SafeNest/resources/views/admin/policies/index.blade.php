@@ -200,8 +200,8 @@
                             <td>{{ $application->policy->Title ?? 'N/A' }}</td>
                             <td>
                                 <span class="badge 
-                                    @if($application->Status == 'Approved') bg-success 
-                                    @elseif($application->Status == 'Rejected') bg-danger 
+                                    @if($application->Status == 'approved') bg-success 
+                                    @elseif($application->Status == 'rejected') bg-danger 
                                     @else bg-warning text-dark @endif">
                                     {{ $application->Status }}
                                 </span>
