@@ -83,17 +83,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($recentPayments as $payment)
-                                    <tr>
-                                        <td>{{ $payment->id }}</td>
-                                        <td>{{ $payment->policy->policy_ID }} ?? N/A</td>
-                                        <td>{{ $payment->user->name }} ?? N/A</td>
-                                        <td>${{ number_format($payment->amount, 2) }}</td>
-                                        
-                                        <td>{{ $payment->created_at->format('M d, Y') }}</td>
-                                        
-                                    </tr>
-                                    @endforeach
+                                @foreach($recentPayments as $payment)
+<tr>
+    <td>{{ $payment->id }}</td>
+    <td>{{ $payment->policy->Policy_ID ?? 'N/A' }}</td>
+    <td>{{ $payment->user->name ?? 'N/A' }}</td>
+    <td>${{ number_format($payment->amount, 2) }}</td>
+    <td>{{ $payment->created_at->format('M d, Y') }}</td>
+</tr>
+@endforeach
+
                                 </tbody>
                             </table>
                         </div>
