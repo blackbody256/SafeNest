@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Claim;
 use App\Models\Policy;
+use App\Mail\ClaimStatusUpdated;
+use Illuminate\Support\Facades\Mail;
 
 class ClaimController extends Controller
 {
@@ -27,6 +29,13 @@ public function updateStatus(Request $request, $id)
     $claim = Claim::findOrFail($id);
     $claim->status = $request->status;
     $claim->save();
+
+    $claim->refresh();
+
+     // Send email to the customer
+     if ($claim->user && $claim->user->email) {
+        Mail::to($claim->user->email)->send(new ClaimStatusUpdated($claim));
+    }
 
     return redirect()->back()->with('success', 'Claim status updated.');
 }
