@@ -261,6 +261,12 @@
     color: #333;
     padding-top: 1rem;
   }
+  .btn-small {
+    padding: 0.6rem 1.8rem;
+    font-size: 1.4rem;
+    border-radius: 3rem;
+}
+
 
   .contact {
     padding: 3rem 1.5rem;
