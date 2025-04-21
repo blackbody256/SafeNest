@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\Models\Payments;
+use App\Models\User;
 use Carbon\Carbon;
 
 class PaymentController extends Controller
@@ -11,6 +12,10 @@ class PaymentController extends Controller
     public function index()
     {
         $totalRevenue = Payments::sum('amount');
+        $underwriterCount = User::where('role','underwriter')->count();
+        $underwriterCommission = $totalRevenue * 0.05;
+         // Assuming a 5% commission rate
+        $netRevenue = $totalRevenue - $underwriterCommission; 
 
         $monthlyRevenue = Payments::whereYear('created_at', now()->year)
         ->whereMonth('created_at', now()->month)
@@ -26,6 +31,10 @@ class PaymentController extends Controller
         return view('admin.payments.index', [
             'totalRevenue' => $totalRevenue,
             'monthlyRevenue' => $monthlyRevenue,
+
+            'netRevenue' => $netRevenue,
+            
+            'underwriterCommission' => $underwriterCommission,
             'revenueChart' => $revenueChart,
             'recentPayments' => $recentPayments,
         ]);

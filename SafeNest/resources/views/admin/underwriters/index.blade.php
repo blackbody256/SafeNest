@@ -28,48 +28,58 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Commission Rate</th>
+                        <th>Commission</th> {{-- New column --}}
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($underwriters as $underwriter)
-                        <tr>
-                            <td>{{ $underwriter->user->name }}</td>
-                            <td>{{ $underwriter->user->email }}</td>
-                            <td>{{ $underwriter->commission_rate }}%</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <!-- Edit Button -->
-                                    <a href="{{ route('admin.underwriters.edit', $underwriter) }}"
-                                       class="btn btn-primary btn-sm me-2">
-                                        Edit
-                                    </a>
+                <thead>
+    
+</thead>
+<tbody>
+    @foreach ($underwriters as $underwriter)
+        <tr>
+            <td>{{ $underwriter->user->name }}</td>
+            <td>{{ $underwriter->user->email }}</td>
+            <td>{{ $underwriter->commission_rate }}%</td>
+            <td>
+                {{ number_format($calculatedCommissions[$underwriter->id] ?? 0, 2) }}
+            </td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <!-- Edit Button -->
+                    <a href="{{ route('admin.underwriters.edit', $underwriter) }}"
+                       class="btn btn-primary btn-sm me-2">
+                        Edit
+                    </a>
 
-                                    <!-- Demote Button -->
-                                    <form action="{{ route('admin.underwriters.destroy', $underwriter) }}"
-                                          method="POST" onsubmit="return confirm('Are you sure you want to demote this underwriter?')"
-                                          class="me-2">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" class="btn btn-warning btn-sm">
-                                            Demote
-                                        </button>
-                                    </form>
+                    <!-- Demote Button -->
+                    <form action="{{ route('admin.underwriters.destroy', $underwriter) }}"
+                          method="POST"
+                          onsubmit="return confirm('Are you sure you want to demote this underwriter?')"
+                          class="me-2">
+                        @csrf
+                        @method('PATCH')
+                        <button type="submit" class="btn btn-warning btn-sm">
+                            Demote
+                        </button>
+                    </form>
 
-                                    <!-- Delete Button -->
-                                    <form action="{{ route('admin.underwriters.destroy', $underwriter) }}"
-                                          method="POST" onsubmit="return confirm('Are you sure you want to delete this underwriter?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
+                    <!-- Delete Button -->
+                    <form action="{{ route('admin.underwriters.destroy', $underwriter) }}"
+                          method="POST"
+                          onsubmit="return confirm('Are you sure you want to delete this underwriter?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    @endforeach
+</tbody>
+
             </table>
         </div>
 

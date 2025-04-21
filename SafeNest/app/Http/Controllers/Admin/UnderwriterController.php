@@ -9,15 +9,34 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\UnderwriterWelcomeMail;
+use App\Models\Payments;
 
 class UnderwriterController extends Controller
 {
     public function index()
-    {
-        $underwriters = Underwriter::with('user')->latest()->paginate(10);
+{
+    $totalRevenue = Payments::sum('amount');
+    $underwriterCommission = $totalRevenue * 0.05;
 
-        return view('admin.underwriters.index', compact('underwriters'));
+    // Fetch all underwriters
+    $underwriters = Underwriter::with('user')->latest()->paginate(10);
+
+    // Total weight = sum of all commission rates
+    $totalCommissionRate = Underwriter::sum('commission_rate');
+
+    // Calculate and store individual commissions
+    $calculatedCommissions = [];
+
+    foreach ($underwriters as $underwriter) {
+        $share = ($underwriter->commission_rate / $totalCommissionRate);
+        $commissionAmount = $share * $underwriterCommission;
+
+        $calculatedCommissions[$underwriter->id] = round($commissionAmount, 2);
     }
+
+    return view('admin.underwriters.index', compact('underwriters', 'calculatedCommissions'));
+}
+
 
     public function create()
     {
