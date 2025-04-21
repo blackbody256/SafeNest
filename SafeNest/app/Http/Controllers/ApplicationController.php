@@ -150,9 +150,12 @@ public function approve($id)
         $applications = \App\Models\policy_applications::where('User_ID', $userId)
                         ->with('policy')
                         ->get();
+        
+        $user = auth()->user();                
 
         return view('customer.dashboard', [
             'applications' => $applications,
+            'user' => $user,
             'title' => 'Dashboard', 
             'activePage' => 'dashboard', 
             'activeButton' => 'dashboard', 
