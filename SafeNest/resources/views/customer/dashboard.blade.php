@@ -10,6 +10,19 @@
             <div class="card bg-dark text-white shadow-sm rounded">
                 <div class="card-body text-center">
                     <h4 class="mb-0">👋 Welcome to your dashboard,{{ $user->name ?? 'Esteemed Client' }}!</h4>
+                    @if ($duePayments && $duePayments->count())
+                        @foreach ($duePayments as $payment)
+                            <div class="alert alert-warning mt-3 d-flex align-items-center" role="alert" style="font-size: 16px;">
+                                <i class="bi bi-bell me-2" style="font-size: 24px;"></i>
+                                <div>
+                                    <strong>Next Payment Due for {{ $payment->policy->Title ?? 'Policy' }}:</strong> 
+                                    {{ \Carbon\Carbon::parse($payment->due_date)->format('F j, Y') }} 
+                                    (UGX {{ number_format($payment->amount) }})
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
         </div>
