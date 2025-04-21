@@ -53,7 +53,8 @@ class CustomerClaimController extends Controller
         $request->validate([
             'policy_id' => 'required|exists:policies,Policy_ID',
             'description' => 'required|string|max:255',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048', // Limit to 2MB
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx,xls,xlsx,txt,zip,rar,csv,webp,mp4,avi,mkv|max:40480'
+, 
         ]);
 
         $path = null;
