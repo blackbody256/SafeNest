@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 //use Carbon\Carbon;
 
+//to fetch the due date for a customer.
+use App\Models\Payments;
+
 
 
 use App\Models\ApprovedPolicy;
@@ -142,23 +145,35 @@ public function approve($id)
     }
 
     //customer dashboard
-        public function customerApplications()
+    public function customerApplications()
     {
         // Get only the applications of the logged-in customer (user)
         $userId = auth()->id();
-
+    
         $applications = \App\Models\policy_applications::where('User_ID', $userId)
                         ->with('policy')
                         ->get();
-
+        
+        $user = auth()->user();
+        
+        // Fetch ALL due payments 
+        $duePayments = Payments::where('user_id', $userId)
+                        ->where('status', '!=', 'paid')
+                        ->orderBy('due_date')
+                        ->with('policy') 
+                        ->get();
+    
         return view('customer.dashboard', [
             'applications' => $applications,
+            'user' => $user,
+            'duePayments' => $duePayments, // Send all due payments to the view
             'title' => 'Dashboard', 
             'activePage' => 'dashboard', 
             'activeButton' => 'dashboard', 
             'navName' => 'Dashboard'
         ]);
     }
+    
 
 }
 

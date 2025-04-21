@@ -122,7 +122,7 @@
 
             </div>
         </div>
-        <a href="{{ route('customer.homepolicies') }}" class="btn">View other Policies</a>
+        <a href="{{ route('customer.homepolicies') }}" class="btn btn-small">View other Policies</a>
 
 
     </div>
