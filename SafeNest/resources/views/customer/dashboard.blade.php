@@ -9,7 +9,7 @@
         <div class="col-12 mb-4">
             <div class="card bg-dark text-white shadow-sm rounded">
                 <div class="card-body text-center">
-                    <h4 class="mb-0">👋 Welcome Esteemed Client</h4>
+                    <h4 class="mb-0">👋 Welcome to your dashboard,{{ $user->name ?? 'Esteemed Client' }}!</h4>
                 </div>
             </div>
         </div>
