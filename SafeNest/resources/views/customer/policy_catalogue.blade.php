@@ -23,7 +23,7 @@
                     <h5 class="card-title">{{ $policy->Title }}</h5>
                     <p class="card-text">{{ $policy->Description }}</p>
                     <p><strong>Premium:</strong> {{ $policy->Premium }}</p>
-                    <p><strong>Duration:</strong> {{ \Carbon\Carbon::parse($policy->Duration)->format('Y/m/d') ?? 'N/A' }}</p>
+                    <p><strong>Duration:</strong> {{ $policy->Duration }} years</p>
                 </div>
                 {{-- Show quote success under this card only --}}
                 @if(session('quote_policy_id') == $policy->Policy_ID)
