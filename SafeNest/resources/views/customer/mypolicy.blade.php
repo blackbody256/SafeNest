@@ -276,7 +276,7 @@ $(document).ready(function() {
         
         // Correctly set the action URL with the payment ID from the form
         const paymentId = $('#payment_id').val();
-        submissionForm.attr('action', '{{ url('/customer/payments') }}/' + paymentId + '/pay');
+        submissionForm.attr('action', '{{ url("/customer/payments") }}/' + paymentId + '/pay');
         
         // Add CSRF token
         submissionForm.append($('<input>').attr({
