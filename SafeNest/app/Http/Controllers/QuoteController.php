@@ -110,7 +110,7 @@ public function store(Request $request)
             $totalMonths = max($startDate->diffInMonths($endDate), 1); // fallback to at least 1
 
             // Final quote calculation
-            $quoteAmount = $policy->Premium * $totalMonths * 1.15;
+            $quoteAmount = $policy->Premium * $totalMonths;
 
 
         // Save quote to DB
