@@ -24,7 +24,8 @@ class PaymentController extends Controller
         $revenueChart = $this->getRevenueChartData();
 
         $recentPayments = Payments::with(['policy', 'user'])
-            ->orderBy('created_at', 'desc')
+            ->where('status', 'paid')
+            ->orderBy('created_at', 'desc')    //TODO: Add pagination
             ->take(10)
             ->get();
 
