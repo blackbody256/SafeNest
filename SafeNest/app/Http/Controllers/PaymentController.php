@@ -188,4 +188,29 @@ class PaymentController extends Controller
         self::checkPolicyExpiryStatus();
     }
 
+    public function customerDashboard()
+    {
+        $userId = auth()->id();
+        $user = auth()->user();
+
+        // Get all payments for the logged-in user
+        $payments = Payments::where('user_id', $userId)
+                    ->whereNotNull('approved_policy_id') // Only payments linked to an approved policy
+                    ->with(['approvedPolicy.policy']) // Eager load relations
+                    ->get();
+
+        // Get due payments (status not 'paid')
+        $overduePayments = $payments->where('status','overdue')->sortBy('due_date');
+
+        return view('customer.dashboard', [
+            'payments' => $payments, 
+            'user' => $user,
+            'overduePayments' => $overduePayments,
+            'title' => 'Dashboard', 
+            'activePage' => 'dashboard', 
+            'activeButton' => 'dashboard', 
+            'navName' => 'Dashboard'
+        ]);
+    }
+
 }

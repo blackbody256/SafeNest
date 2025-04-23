@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UnderwriterController;
 use App\Http\Controllers\Admin\ClaimsController;
 use App\Http\Controllers\Admin\PoliciesController; // Ensure this matches the actual namespace of the PoliciesController class
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\PaymentController as CustomerPaymentController;
 use App\Http\Controllers\Admin\AdminDashboard;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApprovedPolicyController;
@@ -125,10 +126,12 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     ]);
 });
 
-// Customer route → views/customer/dashboard.blade.php
-Route::get('/customer/dashboard', [ApplicationController::class, 'customerApplications'])
+
+//customer dashboard
+Route::get('/customer/dashboard', [CustomerPaymentController::class, 'customerDashboard'])
     ->middleware('role:customer')
     ->name('customerdashboard');
+
 
     
 
