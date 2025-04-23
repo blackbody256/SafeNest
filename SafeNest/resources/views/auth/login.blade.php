@@ -57,8 +57,6 @@
 
             <div class="d-flex justify-content-between mt-3 px-4">
                 <a class="btn btn-link" style="color:#23CCEF; font-size: 14px;"
-                    href="{{ route('password.request') }}">{{ __('Forgot password?') }}</a>
-                <a class="btn btn-link" style="color:#23CCEF; font-size: 14px;"
                     href="{{ route('register') }}">{{ __('Create account') }}</a>
             </div>
         </div>
