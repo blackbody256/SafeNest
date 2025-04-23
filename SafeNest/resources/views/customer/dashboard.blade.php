@@ -23,7 +23,6 @@
                                 <div>
                                     <strong>Overdue Payment for {{ $payment->approvedPolicy->policy->Title ?? 'Policy' }}:</strong> 
                                     {{ \Carbon\Carbon::parse($payment->due_date)->format('F j, Y') }} 
-                                    (UGX {{ number_format($payment->amount) }})
                                 </div>
                             </div>
                         @endforeach
