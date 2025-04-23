@@ -50,8 +50,8 @@
                             @endif
                         </div>
                         <small>
-                            Paid: ${{ number_format($paymentSummary['paid'], 2) }} | 
-                            Remaining: ${{ number_format($paymentSummary['pending'], 2) }}
+                            Paid: UGX {{ number_format($paymentSummary['paid'], 2) }} | 
+                            Remaining: UGX {{ number_format($paymentSummary['pending'], 2) }}
                         </small>
                     </td>
                     <td>
@@ -128,7 +128,7 @@
                     <input type="hidden" id="payment_id" name="payment_id">
                     
                     <div class="alert alert-info">
-                        Amount to be paid: <strong>$<span id="payment-amount">0.00</span></strong>
+                        Amount to be paid: <strong>UGX <span id="payment-amount">0.00</span></strong>
                     </div>
                     
                     <div class="form-group mb-3">

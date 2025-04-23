@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ $payment->policy->Title ?? 'Unknown Policy' }}</td>
                         <td>{{ $payment->due_date->format('d/m/Y') }}</td>
-                        <td>${{ number_format($payment->amount, 2) }}</td>
+                        <td>UGX {{ number_format($payment->amount, 2) }}</td>
                         <td>
                             @if($payment->status == 'paid')
                                 <span class="badge bg-success">Paid</span>

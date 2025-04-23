@@ -35,7 +35,7 @@
                     <p><strong>Status:</strong> {{ $approvedPolicy->Status }}</p>
                 </div>
                 <div class="col-md-6">
-                    <p><strong>Premium:</strong> ${{ number_format($approvedPolicy->policy->Premium ?? 0, 2) }}</p>
+                    <p><strong>Premium:</strong> UGx{{ number_format($approvedPolicy->policy->Premium ?? 0, 2) }}</p>
                     <p><strong>Expires At:</strong> {{ $approvedPolicy->expires_at ? $approvedPolicy->expires_at->format('d/m/Y') : 'N/A' }}</p>
                 </div>
             </div>
@@ -100,13 +100,13 @@
                     <h6>Payment Summary</h6>
                     <div class="row">
                         <div class="col-md-4">
-                            <p><strong>Total Amount:</strong> ${{ number_format($payments->sum('amount'), 2) }}</p>
+                            <p><strong>Total Amount:</strong> UGx{{ number_format($payments->sum('amount'), 2) }}</p>
                         </div>
                         <div class="col-md-4">
-                            <p><strong>Paid Amount:</strong> ${{ number_format($payments->where('status', 'paid')->sum('amount'), 2) }}</p>
+                            <p><strong>Paid Amount:</strong> UGx{{ number_format($payments->where('status', 'paid')->sum('amount'), 2) }}</p>
                         </div>
                         <div class="col-md-4">
-                            <p><strong>Remaining Amount:</strong> ${{ number_format($payments->whereIn('status', ['pending', 'overdue'])->sum('amount'), 2) }}</p>
+                            <p><strong>Remaining Amount:</strong> UGx{{ number_format($payments->whereIn('status', ['pending', 'overdue'])->sum('amount'), 2) }}</p>
                         </div>
                     </div>
                 </div>
