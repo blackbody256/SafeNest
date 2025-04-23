@@ -22,7 +22,7 @@
                             <div class="col-7 col-md-8">
                                 <div class="numbers">
                                     <p class="card-category">Total Revenue</p>
-                                    <p class="card-title">${{ number_format($totalRevenue, 2) }}</p>
+                                    <p class="card-title">UGX {{ number_format($totalRevenue, 2) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                             <div class="col-7 col-md-8">
                                 <div class="numbers">
                                     <p class="card-category">This Month</p>
-                                    <p class="card-title">${{ number_format($monthlyRevenue, 2) }}</p>
+                                    <p class="card-title">UGX {{ number_format($monthlyRevenue, 2) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             <div class="col-7 col-md-8">
                                 <div class="numbers">
                                     <p class="card-category">Total Underwriter Commission</p>
-                                    <p class="card-title">${{ number_format($underwriterCommission, 2) }}</p>
+                                    <p class="card-title">UGX {{ number_format($underwriterCommission, 2) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                             <div class="col-7 col-md-8">
                                 <div class="numbers">
                                     <p class="card-category">Net Revenue</p>
-                                    <p class="card-title">${{ number_format($netRevenue, 2) }}</p>
+                                    <p class="card-title">UGX {{ number_format($netRevenue, 2) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
     <td>{{ $payment->id }}</td>
     <td>{{ $payment->policy->Policy_ID ?? 'N/A' }}</td>
     <td>{{ $payment->user->name ?? 'N/A' }}</td>
-    <td>${{ number_format($payment->amount, 2) }}</td>
+    <td>UGX {{ number_format($payment->amount, 2) }}</td>
     <td>{{ $payment->created_at->format('M d, Y') }}</td>
 </tr>
 @endforeach
@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     beginAtZero: true,
                     ticks: {
                         callback: function(value) {
-                            return '$' + parseFloat(value).toLocaleString();
+                            return 'UGX ' + parseFloat(value).toLocaleString();
                         }
                     },
                     grid: {
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 tooltip: {
                     callbacks: {
                         label: function(context) {
-                            return '$' + parseFloat(context.raw).toLocaleString();
+                            return 'UGX ' + parseFloat(context.raw).toLocaleString();
                         }
                     }
                 },

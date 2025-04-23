@@ -42,7 +42,7 @@
             <td>{{ $underwriter->user->email }}</td>
             <td>{{ $underwriter->commission_rate }}%</td>
             <td>
-                {{ number_format($calculatedCommissions[$underwriter->id] ?? 0, 2) }}
+                UGX {{ number_format($calculatedCommissions[$underwriter->id] ?? 0, 2) }}
             </td>
             <td>
                 <div class="d-flex align-items-center">
