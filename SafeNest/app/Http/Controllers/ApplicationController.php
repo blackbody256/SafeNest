@@ -144,35 +144,6 @@ public function approve($id)
         return redirect()->route('applications.index')->with('success', 'Policy rejected successfully.');
     }
 
-    //customer dashboard
-    public function customerApplications()
-    {
-        // Get only the applications of the logged-in customer (user)
-        $userId = auth()->id();
-    
-        $applications = \App\Models\policy_applications::where('User_ID', $userId)
-                        ->with('policy')
-                        ->get();
-        
-        $user = auth()->user();
-        
-        // Fetch ALL due payments 
-        $duePayments = Payments::where('user_id', $userId)
-                        ->where('status', '!=', 'paid')
-                        ->orderBy('due_date')
-                        ->with('policy') 
-                        ->get();
-    
-        return view('customer.dashboard', [
-            'applications' => $applications,
-            'user' => $user,
-            'duePayments' => $duePayments, // Send all due payments to the view
-            'title' => 'Dashboard', 
-            'activePage' => 'dashboard', 
-            'activeButton' => 'dashboard', 
-            'navName' => 'Dashboard'
-        ]);
-    }
     
 
 }
